@@ -6,18 +6,15 @@ from freqtrade.strategy import merge_informative_pair, DecimalParameter, stoplos
 from pandas import DataFrame, Series
 from datetime import datetime
 
-
 def bollinger_bands(stock_price, window_size, num_of_std):
     rolling_mean = stock_price.rolling(window=window_size).mean()
     rolling_std = stock_price.rolling(window=window_size).std()
     lower_band = rolling_mean - (rolling_std * num_of_std)
     return np.nan_to_num(rolling_mean), np.nan_to_num(lower_band)
 
-
 def ha_typical_price(bars):
     res = (bars['ha_high'] + bars['ha_low'] + bars['ha_close']) / 3.
     return Series(index=bars.index, data=res)
-
 
 class ClucHAnix_5m(IStrategy):
     """
